@@ -6,7 +6,7 @@ export interface Product {
   modified: string,
   status: number,
   activate_date: string,
-  deactivate_date: string,
+  deactivate_date: string | null,
   title: string,
   price: number,
   discountPrice: number,

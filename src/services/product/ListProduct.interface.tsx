@@ -2,7 +2,7 @@ import { Product } from "./Product.interface";
 
 export interface ListProduct {
   count: number,
-  next: string,
-  previous: string,
-  result: Product[]
+  next: string | null,
+  previous: string | null,
+  results: Product[]
 }

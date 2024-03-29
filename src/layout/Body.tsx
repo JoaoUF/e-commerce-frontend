@@ -3,8 +3,17 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
 import SearchItem from '../components/SearchItem';
+import { Product } from '../services/product/Product.interface';
+import ProductCard from '../components/ProductCard';
 
-export default function Body({ children }: any) {
+interface BodyProps {
+  result: Product[]
+  getProductsSearch: (busqueda: string) => void
+}
+
+export default function Body(props: BodyProps) {
+  const { result, getProductsSearch } = props
+
   return (
     <Box
       id="hero"
@@ -24,10 +33,10 @@ export default function Body({ children }: any) {
           flexDirection: 'column',
           alignItems: 'center',
           pt: { xs: 14, sm: 20 },
-          pb: { xs: 8, sm: 12 },
+          pb: { xs: 4, sm: 8 },
         }}
       >
-        <SearchItem />
+        <SearchItem getProductsSearch={getProductsSearch} />
         <Stack
           spacing={{ xs: 3, sm: 2 }}
           direction="row"
@@ -38,7 +47,9 @@ export default function Body({ children }: any) {
             width: { xs: '100%' }
           }}
         >
-          {children}
+          {result && result?.map((product) => (
+            <ProductCard product={product} />
+          ))}
         </Stack>
       </Container>
     </Box>

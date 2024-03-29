@@ -4,9 +4,11 @@ import { Product } from './Product.interface'
 import { ListProduct } from './ListProduct.interface'
 import { UUID } from 'crypto'
 
+type OptionalNumber = number | null
+
 export class ProductService {
-  getAllProducts(limit: string = '', offset: string = ''): Promise<ListProduct> {
-    return AxiosConfig.get(`product/?limit=${limit}&offset=${offset}`).then((response: AxiosResponse<ListProduct>) => response.data)
+  getAllProducts(limit: OptionalNumber = null, offset: OptionalNumber = null, search: string = ''): Promise<ListProduct> {
+    return AxiosConfig.get(`product/?limit=${limit}&offset=${offset}&search=${search}`).then((response: AxiosResponse<ListProduct>) => response.data)
   }
 
   createProduct(data: any): Promise<Product> {

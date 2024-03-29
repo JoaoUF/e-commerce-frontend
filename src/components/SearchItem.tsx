@@ -1,9 +1,17 @@
+import * as React from 'react'
 import Paper from '@mui/material/Paper'
 import InputBase from '@mui/material/InputBase'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 
-export default function SearchItem() {
+interface SearchProps {
+  getProductsSearch: (busqueda: string) => void
+}
+
+export default function SearchItem(props: SearchProps) {
+  const { getProductsSearch } = props
+  const [text, setText] = React.useState('')
+
   return (
     <Paper
       component="form"
@@ -20,9 +28,11 @@ export default function SearchItem() {
     >
       <InputBase
         sx={{ mx: 1, flex: 1 }}
+        value={text}
+        onChange={e => setText(e.target.value as string)}
         placeholder="Search product"
       />
-      <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+      <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={() => getProductsSearch(text)}>
         <SearchIcon />
       </IconButton>
     </Paper>
