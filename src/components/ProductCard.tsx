@@ -6,18 +6,20 @@ import CardMedia from '@mui/material/CardMedia'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { Product } from '../services/product/Product.interface'
+import { UUID } from 'crypto'
 
 interface ProductCardProps {
   product: Product
+  setValue: (numero: UUID) => void
 }
 
 export default function ProductCard(props: ProductCardProps) {
-  const { product } = props
+  const { product, setValue } = props
 
   return (
     <Card
       sx={{
-        width: { xs: '100%', sm: '30%' }
+        width: { xs: '100%', sm: '30%' },
       }}
     >
       <CardMedia
@@ -36,7 +38,7 @@ export default function ProductCard(props: ProductCardProps) {
       </CardContent>
       <CardActions>
         <Button size="small">View</Button>
-        <Button size="small">Add to card</Button>
+        <Button onClick={() => setValue(product.id)} size="small">Add to card</Button>
       </CardActions>
     </Card>
   );

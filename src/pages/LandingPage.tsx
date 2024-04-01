@@ -21,7 +21,7 @@ export default function LandingPage() {
   const [listProduct, setListProduct] = React.useState<ListProduct>()
   const LPtheme = createTheme(getLPTheme(mode))
   const defaultTheme = createTheme({ palette: { mode } })
-  // const { setValue }: any = useLocalStorage()
+  const { setValue }: any = useLocalStorage()
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value)
@@ -38,8 +38,7 @@ export default function LandingPage() {
       setListProduct(output)
       return output
     } catch (error) {
-      // console.log(error)
-      console.log('error')
+      console.log(error)
     }
   }
 
@@ -70,7 +69,7 @@ export default function LandingPage() {
         flexDirection='column'
         sx={{ bgcolor: 'background.default' }}
       >
-        <Body result={listProduct?.results!} getProductsSearch={getProductsSearch} />
+        <Body result={listProduct?.results!} getProductsSearch={getProductsSearch} setValue={setValue} />
         <Pagination
           hidePrevButton
           hideNextButton

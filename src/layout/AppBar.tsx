@@ -10,7 +10,10 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
+import Menu from '@mui/material/Menu';
 import ToggleColorMode from '../components/ToggleColorMode';
+import Fade from '@mui/material/Fade';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 const logoStyle = {
   width: '140px',
@@ -24,11 +27,22 @@ interface AppAppBarProps {
 }
 
 function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
-  const [open, setOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const [open, setOpen] = React.useState(false)
+  const openMenu = Boolean(anchorEl)
+  const { card }: any = useLocalStorage()
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
+    setOpen(newOpen)
+  }
 
   const scrollToSection = (sectionId: string) => {
     const sectionElement = document.getElementById(sectionId);
@@ -104,13 +118,32 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                   </Typography>
                 </MenuItem>
                 <MenuItem
-                  onClick={() => scrollToSection('features')}
+                  onClick={handleClick}
                   sx={{ py: '6px', px: '12px' }}
                 >
                   <Typography variant="body2" color="text.primary">
                     Card
                   </Typography>
                 </MenuItem>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={openMenu}
+                  onClose={handleClose}
+                  TransitionComponent={Fade}
+                >
+                  {
+                    Object.keys(card).length === 0 ?
+                      <MenuItem>No items</MenuItem>
+                      :
+                      <>
+                        {
+                          card.array.forEach((element: any) => {
+                            <MenuItem>{element.value}</MenuItem>
+                          })
+                        }
+                      </>
+                  }
+                </Menu>
               </Box>
             </Box>
             <Box

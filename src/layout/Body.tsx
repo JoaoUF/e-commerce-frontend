@@ -2,17 +2,19 @@ import { alpha } from '@mui/material'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
-import SearchItem from '../components/SearchItem';
-import { Product } from '../services/product/Product.interface';
-import ProductCard from '../components/ProductCard';
+import SearchItem from '../components/SearchItem'
+import { Product } from '../services/product/Product.interface'
+import ProductCard from '../components/ProductCard'
+import { UUID } from 'crypto'
 
 interface BodyProps {
   result: Product[]
   getProductsSearch: (busqueda: string) => void
+  setValue: (numero: UUID) => void
 }
 
 export default function Body(props: BodyProps) {
-  const { result, getProductsSearch } = props
+  const { result, getProductsSearch, setValue } = props
 
   return (
     <Box
@@ -47,8 +49,8 @@ export default function Body(props: BodyProps) {
             width: { xs: '100%' }
           }}
         >
-          {result && result?.map((product) => (
-            <ProductCard product={product} />
+          {result && result?.map((product, index) => (
+            <ProductCard product={product} setValue={setValue} key={index} />
           ))}
         </Stack>
       </Container>

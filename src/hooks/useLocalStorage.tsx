@@ -1,20 +1,21 @@
+import { UUID } from 'crypto'
 import { useEffect, useState } from 'react'
 
 type Item<Key extends keyof any, Value> = {
   [key in Key]: Value
 }
 
-export function useLocalStorage() {
-  const [card, setCard] = useState<Item<string, number>>(() => {
+export const useLocalStorage = () => {
+  const [card, setCard] = useState(() => {
     try {
       const getCard = window.localStorage.getItem('card')
       return getCard ? JSON.parse(getCard) : {}
     } catch (error) {
-      return {}
+      console.log('error iniciar carro')
     }
   })
 
-  const setValue = (id: number) => {
+  const setValue = (id: UUID) => {
     try {
       if (card[id] !== undefined) {
         card[id] = card[id] + 1
@@ -29,6 +30,9 @@ export function useLocalStorage() {
   }
 
   useEffect(() => {
+    console.log('este es el card')
     console.log(card)
   }, [card])
+
+  return { card, setValue }
 }
